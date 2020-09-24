@@ -96,3 +96,9 @@ header.hero h2 {
         margin: 10px;
     }
 }
+
+.skip-to-content {
+    left: 50%;
+    position: absolute;
+    transform: translateY(-100%);
+}
