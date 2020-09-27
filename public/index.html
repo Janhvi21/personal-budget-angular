@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- This is an SEO Change -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- This is an SEO Change -->
+    <meta
+      name="description"
+      content="This is a Personal Budget Website created in context with the network-based application course for UNC, Charlotte."
+    />
+    <!-- This is an SEO Change -->
+    <title>Personal Budget Website</title>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="main.css" />
+  </head>
+
+  <body>
+    <!-- This is an A11y Change -->
+    <a class="skip-to-content" href="#main"> Skip to content </a>
+    <!-- This is a Semantic HTML Change 'nav'-->
+    <nav class="menu" role="navigation">
+      <ul>
+        <!-- This is an A11y Change 'aria-checked="true'-->
+        <li aria-checked="true"><a href="/">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="https://google.com">Google</a></li>
+      </ul>
+    </nav>
+    <!-- This is a Semantic HTML Change 'header'-->
+    <header class="hero" title="Personal Budget Background">
+      <!-- This is an SEO Change -->
+      <h1>Personal Budget</h1>
+      <h2>A personal-budget management app</h2>
+    </header>
+    <!-- This is a Semantic HTML Change 'main' -->
+    <main class="container center">
+      <!-- This is an A11y Change 'role="Articles" aria-label="Article Contents"'-->
+      <div role="Articles" aria-label="Article Contents" class="page-area">
+        <div aria-label="Article 1" class="text-box">
+          <h1>Stay on track</h1>
+          <!-- This is a Semantic HTML Change 'article'-->
+          <article>
+            Do you know where you are spending your money? If you really stop to
+            track it down, you would get surprised! Proper budget management
+            depends on real data... and this app will help you with that!
+          </article>
+        </div>
+        <!-- This is an A11y Change aria-label="Article 2"-->
+        <div aria-label="Article 2" class="text-box">
+          <h1>Alerts</h1>
+          <article>
+            What if your clothing budget ended? You will get an alert. The goal
+            is to never go over the budget.
+          </article>
+        </div>
+
+        <div aria-label="Article 3" class="text-box">
+          <h1>Results</h1>
+          <article>
+            People who stick to a financial plan, budgeting every expense, get
+            out of debt faster! Also, they to live happier lives... since they
+            expend without guilt or fear... because they know it is all good and
+            accounted for.
+          </article>
+        </div>
+
+        <div aria-label="Article 4" class="text-box">
+          <h1>Free</h1>
+          <article>
+            This app is free!!! And you are the only one holding your data!
+          </article>
+        </div>
+
+        <div aria-label="Article 5" class="text-box">
+          <h1>Stay on track</h1>
+          <article>
+            Do you know where you are spending your money? If you really stop to
+            track it down, you would get surprised! Proper budget management
+            depends on real data... and this app will help you with that!
+          </article>
+        </div>
+
+        <div aria-label="Article 6" class="text-box">
+          <h1>Alerts</h1>
+          <article>
+            What if your clothing budget ended? You will get an alert. The goal
+            is to never go over the budget.
+          </article>
+        </div>
+
+        <div aria-label="Article 7" class="text-box">
+          <h1>Results</h1>
+          <article>
+            People who stick to a financial plan, budgeting every expense, get
+            out of debt faster! Also, they to live happier lives... since they
+            expend without guilt or fear... because they know it is all good and
+            accounted for.
+          </article>
+        </div>
+
+        <div aria-label="Article 8" class="text-box">
+          <h1>Chart</h1>
+          <article>
+            <canvas id="myChart" width="400" height="400"></canvas>
+          </article>
+        </div>
+      </div>
+    </main>
+    <!-- This is a Semantic HTML Change -->
+    <footer class="bottom">
+      <div class="center">All rights reserved &copy; Fabio Nolasco</div>
+    </footer>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+      integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+      integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg=="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      var dataSource = {
+        datasets: [
+          {
+            data: [],
+            backgroundColor: ["#ffcd56", "#ff6384", "#36a2eb", "#fd6b19"],
+          },
+        ],
+        labels: [],
+      };
+      function createChart() {
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myPieChart = new Chart(ctx, {
+          type: "pie",
+          data: dataSource,
+        });
+      }
+      function getBudget() {
+        axios.get("/budget").then(function (res) {
+          console.log(res);
+          for (var i = 0; i < res.data.myBudget.length; i++) {
+            dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
+            dataSource.labels[i] = res.data.myBudget[i].title;
+          }
+          createChart();
+        });
+      }
+      getBudget();
+    </script>
+  </body>
+</html>
