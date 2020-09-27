@@ -1,0 +1,28 @@
+{"myBudget":[
+    {
+        "title":"Eat out",
+        "budget":25
+    },
+    {
+        "title":"Rent",
+        "budget":375
+    },
+    {
+        "title":"Grocery",
+        "budget":110
+    },
+    {
+        "title":"Entertainment",
+        "budget":50
+    },
+    {
+        "title":"Shopping",
+        "budget":80
+    },{
+        "title":"Academic",
+        "budget":30
+    },{
+        "title":"Miscellaneous",
+        "budget":20
+    }
+]}
