@@ -1,66 +1,49 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Data } from '@angular/router';
+import { Observable } from 'rxjs';
 
-export interface Item {
-  name: string;
-  value: number;
-  abs: number;
+export class element {
+  value: '';
+  labels: '';
+  constructor() {}
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  private readonly NAMES = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z',
-  ];
+  public dataSource = {
+    datasets: [
+      {
+        data: [],
+        backgroundColor: [
+          '#98abc5',
+          '#8a89a6',
+          '#7b6888',
+          '#6b486b',
+          '#a05d56',
+          '#d0743c',
+          '#ff8c00',
+        ],
+      },
+    ],
+    labels: [],
+  };
+  public data = [];
+  public result;
+  constructor(private http: HttpClient) {}
 
-  private readonly MIN_ITEM = 10;
-  private readonly MAX_ITEM = 20;
-
-  private readonly MAX_VALUE = 100;
-
-  constructor() {}
-
-  private generateRandomValue(start: number, end: number) {
-    return Math.ceil(Math.random() * (end - start) + start);
-  }
-
-  getData(): Item[] {
-    const nbItems = this.generateRandomValue(this.MIN_ITEM, this.MAX_ITEM);
-    const samples = [];
-    for (let i = 0; i < nbItems; i++) {
-      const val = this.generateRandomValue(1, this.MAX_VALUE);
-      samples.push({
-        name: this.NAMES[i],
-        value: val,
-        abs: Math.abs(val),
-      });
-    }
-    return samples;
+  getData(){
+    this.http.get('http://localhost:3000/budget').subscribe((res: any) => {
+      for (let i = 0; i < res.myBudget.length; i++) {
+        this.dataSource.datasets[0].data[i] = res.myBudget[i].budget;
+        this.dataSource.labels[i] = res.myBudget[i].title;
+        const ele = new element();
+        ele.value = res.myBudget[i].budget;
+        ele.labels = res.myBudget[i].title;
+        this.data.push(ele);
+      }
+    });
   }
 }
