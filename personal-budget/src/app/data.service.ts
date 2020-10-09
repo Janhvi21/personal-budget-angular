@@ -36,23 +36,16 @@ export class DataService {
 
   getData() {
     this.data = [];
-    const promise = new Promise((resolve, reject) => {
-      this.http
-        .get('http://localhost:3000/budget')
-        .toPromise()
-        .then((res: any) => {
-          for (let i = 0; i < res.myBudget.length; i++) {
-            this.dataSource.datasets[0].data[i] = res.myBudget[i].budget;
-            this.dataSource.labels[i] = res.myBudget[i].title;
-            const ele = new Element();
-            ele.value = res.myBudget[i].budget;
-            ele.labels = res.myBudget[i].title;
-            this.data.push(ele);
-            console.log(this.data);
-            resolve();
-          }
-        });
+    this.http.get('http://localhost:3000/budget').subscribe((res: any) => {
+      for (let i = 0; i < res.myBudget.length; i++) {
+        this.dataSource.datasets[0].data[i] = res.myBudget[i].budget;
+        this.dataSource.labels[i] = res.myBudget[i].title;
+        const ele = new Element();
+        ele.value = res.myBudget[i].budget;
+        ele.labels = res.myBudget[i].title;
+        this.data.push(ele);
+        console.log(this.data);
+      }
     });
-    return promise;
   }
 }

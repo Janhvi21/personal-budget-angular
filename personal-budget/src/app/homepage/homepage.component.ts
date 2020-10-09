@@ -17,27 +17,23 @@ export class HomepageComponent implements AfterViewInit {
   private colors;
 
   constructor(public dataService: DataService) {}
-
   ngAfterViewInit(): void {
     // service call only if data is empty
+    console.log('After View');
     if (
       isEmptyObject(this.dataService.data) ||
       isEmptyObject(this.dataService.dataSource)
     ) {
-      // Service Call for myBudget
-      this.dataService.getData().then((res: any) => {
-        this.createChart();
-        this.createSvg();
-        this.createColors();
-        this.drawChart();
-      });
-
+      this.dataService.getData();
     } else {
-      this.createChart();
-      this.createSvg();
-      this.createColors();
-      this.drawChart();
     }
+    this.createSvg();
+    this.createColors();
+
+    setTimeout(() => {
+      this.createChart();
+      this.drawChart();
+    }, 50);
   }
   // Using Chart.js
   createChart(): void {
